@@ -257,6 +257,27 @@
         });
       });
 
+      document.querySelector("#executeProposal").addEventListener("click", function(){
+        var transactionObject = {
+          from: selectedAccount,
+          gas: 3000000
+        };
+
+        contractInstance.vote(
+          document.querySelector("#executeProposal_proposalNumber").value,
+          document.querySelector("#executeProposal_transactionBytecode").value,
+          transactionObject,
+          function(err, transactionHash){
+            document.querySelector("#executeProposal_response").classList.remove("hidden");
+            document.querySelector("#executeProposal_response").innerHTML = "Your proposal is being executed... " + transactionHash;
+          });
+
+        contractInstance.Voted({}, function(err, result){
+          document.querySelector("#executeProposal_response").classList.remove("hidden");
+          document.querySelector("#executeProposal_response").innerHTML = "Your proposal has executed! " + result.transactionHash;
+        });
+      });
+
     </script>
   </body>
 </html>
